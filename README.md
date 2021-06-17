@@ -11,7 +11,7 @@ This part introduces containerization with Docker and relevant concepts such as 
 - Use port mapping to enable access via TCP to containerized applications
 - Share your own containers publicly
 
-## (Part 2)[]
+## Part 2
 
-## (Part 3)[]
+## Part 3
 
