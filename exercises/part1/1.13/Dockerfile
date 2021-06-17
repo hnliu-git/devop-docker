@@ -1,0 +1,17 @@
+FROM golang:1.16
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install git-core --yes
+
+# Clone the git project
+RUN cd /app && git clone https://github.com/docker-hy/material-applications.git
+
+EXPOSE 8080
+
+# Enter the path
+RUN cd /app/material-applications/example-backend/ \
+       && go build \
+       && go test ./... 
+
+CMD ["/app/material-applications/example-backend/server"]
