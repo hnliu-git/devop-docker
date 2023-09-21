@@ -1,0 +1,32 @@
+FROM ubuntu:18.04
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install git-core curl xsel --yes
+
+# Install node and npm
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash && apt-get update
+
+RUN apt install -y nodejs
+
+RUN node -v && npm -v
+
+# Clone the git project
+RUN git clone https://github.com/docker-hy/material-applications.git
+
+EXPOSE 5000
+
+# Enter the path
+RUN cd material-applications/example-frontend/ \
+       && npm install \
+       && npm run build \
+       && npm install -g serve
+
+# Set the backend URI
+ENV REACT_APP_BACKEND_URL=http://127.0.0.1:8080
+
+RUN cd /app/material-applications/example-frontend/ && npm run build
+
+ENTRYPOINT ["serve", "-s", "-l", "5000"]
+
+CMD ["material-applications/example-frontend/build/"]
